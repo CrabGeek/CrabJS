@@ -1,4 +1,4 @@
- (function(storeName, core, global) {
+ (function (storeName, core, global) {
 
      // 支持AMDjs, Commonjs, ES6
      if (typeof define == 'function') {
@@ -9,8 +9,8 @@
          global[storeName] = core();
      }
 
-     var defaultSuccessHandler = function() {};
-     var defaultErrorHandler = function(error) {
+     var defaultSuccessHandler = function () {};
+     var defaultErrorHandler = function (error) {
          throw error;
      };
 
@@ -20,13 +20,13 @@
          dbVersion: 1,
          keyPath: 'id',
          autoIncrement: true,
-         onStoreReady: function() {},
+         onStoreReady: function () {},
          onError: defaultErrorHandler,
          index: [],
      };
 
      //  constructor
-     var CrabStore = function(kwArgs, onStoreReady) {
+     var CrabStore = function (kwArgs, onStoreReady) {
          if (!onStoreReady && typeof kwArgs == 'function') {
              onStoreReady = kwArgs;
          }
@@ -82,11 +82,11 @@
              onStoreReady: null,
              onError: null,
 
-             openDB: function() {
+             openDB: function () {
                  var openRequest = this.idb.open(this.dbName, this.dbVersion);
                  var preventSuccessCallBack = false;
 
-                 openRequest.onsuccess = function(event) {
+                 openRequest.onsuccess = function (event) {
                      if (preventSuccessCallBack) {
                          return;
                      }
@@ -99,16 +99,16 @@
 
                  }.bind(this);
 
-                 openRequest.onerror = function(errorEvent) {
+                 openRequest.onerror = function (errorEvent) {
                      this.onError(new Error(`Crabjs Error: ${errorEvent.target.error}`))
                  }.bind(this);
 
-                 openRequest.onupgradeneeded = function() {}
+                 openRequest.onupgradeneeded = function () {}
              }
          }
 
 
      }
- })("CRABStore", function() {
+ })("CRABStore", function () {
 
  }, this)
